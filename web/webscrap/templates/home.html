@@ -1,0 +1,103 @@
+
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>JUMIA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{% static 'style.css'%}">
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+	  		<h1><a href="index.html" class="logo">cherche </a></h1>
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+            <form action="" method="post">
+              {% csrf_token %}
+
+              <div>choisir une marque</div>
+  <select id="maListe1" name="d">
+    <option >choisir</option>
+    {% for i in lst %}
+        <option value={{i}}>{{i}}</option>
+    {% endfor %}
+  </select>
+  
+            <p>donne le prix minimum</p>
+            <input type="text" class="form-control"  name="t2" value={{c}}>
+            <br>
+            
+            <p>donne le prix maximum</p>
+            <input type="text" class="form-control"  name="t3" value={{d}} >
+           
+        </ul>
+            <br>
+            <button type="submit" class="btn btn-success">recherché</button>
+            
+            
+          </form>
+            </li>
+        </ul>
+
+    	</nav>
+
+        <!-- Page Content  -->
+        
+        <div id="content" class="p-4 p-md-5 pt-5" style="display: flex; flex-wrap: wrap;">
+
+          <br>
+         {% if a %}
+          {% for i in a %}
+          <a href={{i.lien}} class="button">
+            <div class="card" style="width: 18rem; margin-right: 20px; margin-bottom: 20px;">
+              <img src="{{i.photo}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"> marque : <font color="black">{{i.nom}}</font> </h5>
+                <p class="card-text"> info : {{i.info}}</p>
+                <p class="card-text"> prix : {{i.prixnv}} TND</p>
+                {% if i.prixold %}
+                  <strike> <p class="card-text">  prix ancien {{i.prixold}} <font color="red">{{i.remise}}</font></p></strike>
+                {% endif %}
+                <p class="card-text"> {{i.disponiblite}} </p>
+                <p class="card-text">{{i.stars}}</p>
+                
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+          {% endif %}
+        </div>
+       
+        {% if messages %}
+        {% for message in messages %}
+        <div class="card text-white bg-danger mb-1" style="max-width: 18rem;">
+          <div class="card-header">message</div>
+          <div class="card-body">
+            <h5 class="card-title"> {{ message }}</h5>
+            
+          </div>
+        </div>
+        
+        
+        {%endfor%}
+        {%endif%}
+  
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'main.js' %}"></script>
+    <script src="{% static 'popper.js' %}"></script>
+  </body>
+</html>
